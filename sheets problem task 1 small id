@@ -1,1 +1,179 @@
 
+// File:main.cpp
+// Purpose: get prime numbers
+// Author: Dareen Mohamed
+// Section: 21
+// ID: 20220121
+// TA: Rana Abdelkader
+// Date: 1 nov 2023
+
+#include <iostream>
+#include <string>
+#include <cctype>
+
+using namespace std;
+string correctSentence(string sentence) {
+    sentence = sentence.substr(sentence.find_first_not_of(" \t\n\r\f\v"), string::npos);
+    sentence = sentence.substr(0, sentence.find_last_not_of(" \t\n\r\f\v") + 1);
+
+    for (char& c : sentence) {
+        c = tolower(c);
+    }
+
+    size_t pos;
+    while ((pos = sentence.find("  ")) != string::npos) {
+        sentence.replace(pos, 2, " ");
+    }
+
+    sentence[0] = toupper(sentence[0]);
+
+    if (sentence.back() != '.') {
+        sentence += '.';
+    }
+    return sentence;
+}
+
+int main() {
+
+    string inputSentence;
+    cout << "Enter a sentence (up to 100 characters): ";
+    getline(std::cin, inputSentence);
+    string outputSentence = correctSentence(inputSentence);
+    cout << "Corrected sentence:\n" << outputSentence << endl;
+
+    return 0;
+}
+
+=================================================
+
+// File:main.cpp
+// Purpose: get prime numbers
+// Author: Dareen Mohamed
+// Section: 21
+// ID: 20220121
+// TA: Rana Abdelkader
+// Date: 1 nov 2023
+
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int main() {
+    int n;
+    cout << "Enter the upper limit: ";
+    cin >> n;
+
+    vector<bool> is_prime(n + 1, true);
+    is_prime[0] = is_prime[1] = false;
+
+    for (int i = 2; i * i <= n; ++i) {
+        if (is_prime[i]) {
+            for (int j = i * i; j <= n; j += i) {
+                is_prime[j] = false;
+            }
+        }
+    }
+
+    cout << "The prime numbers between 2 and " << n << " are:\n";
+    for (int i = 2; i <= n; ++i) {
+        if (is_prime[i]) {
+            cout << i << " ";
+        }
+    }
+    cout << endl;
+
+    return 0;
+}
+
+======================================
+
+// File:main.cpp
+// Purpose: Dominoes
+// Author: Dareen Mohamed
+// Section: 21
+// ID: 20220121
+// TA: Rana Abdelkader
+// Date: 2 nov 2023
+#include <iostream>
+#include <vector>
+using namespace std;
+
+struct dominoT
+{
+    int leftDots;
+    int rightDots;
+};
+
+bool formsDominoChain(vector<dominoT> &dominos);
+
+int main(int argc, char const *argv[])
+{
+    int n;
+    vector<dominoT> dominos;
+    cout << "How many dominos: ";
+    cin >> n;
+    cout << "Enter dominos with this format for ex : 2 3 " << endl;
+    for (int i = 0; i < n; i++)
+    {
+        dominoT domino;
+        cout << "Enter domino " << i + 1 << " : ";
+        cin >> domino.leftDots >> domino.rightDots;
+        dominos.push_back(domino);
+    }
+
+    bool isChain = formsDominoChain(dominos);
+    if (isChain)
+    {
+        cout << "TRUE Can Create Chain of dominos" << endl;
+        for (int i = 0; i < dominos.size(); i++)
+        {
+            cout << dominos[i].leftDots << "|" << dominos[i].rightDots;
+            if (i != dominos.size() - 1)
+            {
+                cout << " - ";
+            }
+        }
+        cout << endl;
+    }
+    else
+    {
+        cout << "FALSE Can't Create Chain of dominos" << endl;
+    }
+
+    return 0;
+}
+
+bool formsDominoChain(vector<dominoT> &dominos)
+{
+    bool isChain = true;
+
+    for (int i = 0; i < dominos.size() - 1; i++)
+    {
+        if (dominos[i].rightDots != dominos[i + 1].leftDots)
+        {
+            isChain = false;
+            break;
+        }
+    }
+
+    if (isChain)
+    {
+        return isChain;
+    }
+
+    for (int i = 0; i < dominos.size(); i++)
+    {
+
+        for (int j = i; j < dominos.size(); j++)
+        {
+            if (dominos[i].leftDots == dominos[j].rightDots && i != j)
+            {
+                dominos.insert(dominos.begin() + j + 1, dominos[i]);
+                dominos.erase(dominos.begin() + i);
+                return formsDominoChain(dominos);
+            }
+        }
+    }
+    return isChain;
+}
