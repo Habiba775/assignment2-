@@ -1,0 +1,59 @@
+//problem 2
+#include<iostream>
+#include <vector>
+#include <string>
+#include<algorithm>
+using namespace std;
+void menu(){
+cout<<"1)add a new player:"<<endl;
+cout<<"2)dispay top 10 names and scores:"<<endl;
+cout<<"3)enter a player name and view it's score:"<<endl;
+cout<<"4)enter 0 to exit:"<<endl;
+}
+int main() {
+    vector<pair<int, string> > vec;
+    string names_arr[] = {"ahmed", "omar", "ali", "khaled", "john", "bill", "tom", "mark", "habiba", "ayla"};
+    int scores_arr[] = {70, 95, 90, 20, 81, 72, 70, 60, 55, 50};
+    int n = sizeof(scores_arr) / sizeof(scores_arr[0]);
+    for (int i = 0; i < n; i++) {
+        vec.emplace_back(make_pair(scores_arr[i], names_arr[i]));
+    }
+    menu();
+    while (true) {
+        int choice;
+        cin >> choice;
+        if (choice == 1) {
+            string name;
+            int score;
+            cout << "enter the player name and it's score:";
+            cin >> name;
+            cin >> score;
+            vec.emplace_back(make_pair(score, name));
+            sort(vec.rbegin(), vec.rend());
+            vec.erase(vec.end() - 1);
+        }
+        if (choice == 2) {
+            sort(vec.rbegin(), vec.rend());
+            for (int i = 0; i < vec.size(); i++) {
+                cout << vec[i].second << ":" << vec[i].first << endl;
+            }
+        } else if (choice == 3) {
+            string name;
+            bool flag=0;
+            cout << "enter the player name:";
+            cin >> name;
+            for (int i = 0; i < vec.size(); i++) {
+                if (vec[i].second == name) {
+                    cout << vec[i].first<<endl;
+                    flag=1;
+
+                }
+            }
+            if(flag==0)
+                cout << "the player name not in the top 10. ";
+        }
+        else if(choice==0){
+            break;
+        }
+    }
+}
