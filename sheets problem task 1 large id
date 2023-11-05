@@ -1,1 +1,195 @@
+//File:A2-S21-20221159-Q3.CPP
+//Purpose:solving problem num 3.
+//ID:20221159
+//TA:Rana abdelkader
+//Date:2 nov 2023
 
+#include <iostream>
+#include <vector>
+#include <string>
+
+//q3
+using namespace std;
+vector<string> split(string target, string delimiter) {
+    vector<string> result;
+    int pos;
+    string S;
+    while ((pos = target.find(delimiter)) != string::npos) {
+        S = target.substr(0, pos);
+        result.push_back(S);
+        target.erase(0, pos + delimiter.length());
+    }
+    result.push_back(target);
+    return result;
+}
+
+int main() {
+    string input;
+    string DEL;
+    cout << "Enter a string to split: ";
+    cin >> input;
+    cout << "Enter a DEL: ";
+    cin >> DEL;
+    vector<string> result = split(input, DEL);
+    cout << "Result: ";
+    for (auto s : result) {
+        cout << s << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
+
+======================================================
+
+//File:A2-S21-20221159-Problem num9
+//Purpose:solving problem num9
+//ID:20221159
+//TA:Rana abdekader
+//Date 23 oct 2023
+
+#include <iostream>
+#include <vector>
+
+//q9
+using namespace std;
+bool bears(int n) {
+
+    if (n == 42) { //if you enter 42 ypu win this game.
+        return true;
+    }
+
+    bool poss1 = false, poss2 = false, poss3 = false; //we have 3 possible
+
+
+    if (n % 2 == 0) { //to check poss 1 that if we have an even num-->n/2 bears
+        poss1 = bears(n / 2);
+    }
+
+    //poss 2 if n is divisble by 3,4 then multiply the last 2 digits of n
+    if (n % 3 == 0 || n % 4 == 0) {
+        int lsd = n % 10;
+        int sld = (n % 100) / 10;
+        int product = lsd * sld;
+
+        if (product > 0) { //subtract product from n
+            poss2 = bears(n - product);
+        }
+    }
+
+    //poss 3 if n is %5 then return 42 bears
+    if (n % 5 == 0) {
+        poss3 = bears(n - 42);
+    }
+
+    // If any of the moves results in a win, return true.
+    return poss1 || poss2 || poss3;
+}
+
+int main() {
+    int n;
+    cout <<" enter the number of bears";
+    cin >> n;
+
+    if (bears(n)) {
+        cout << "YOU CAN WINN!" <<endl;
+    } else {
+        cout << "YOU CAN'T WIN!" <<endl;
+    }
+
+    return 0;
+}
+
+======================================================
+
+//File:A2-S21-20221159-ProblemNum12.CPP
+//Purpose:solving problem num 12.
+//ID:20221159
+//TA:Rana abdelkader
+//Date:23 oct 2023
+
+
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <map>
+
+using namespace std;
+
+// Define the list of keywords and their point values
+map<string, int> keywords = {
+        {"password", 3},
+        {"account", 2},
+        {"security", 2},
+        {"verification", 3},
+        {"bank", 2},
+        {"credit card", 3},
+        {"login", 2},
+        {"urgent", 3},
+        {"verify", 3},
+        {"update", 2},
+        {"phishing", 3},
+        {"fraud", 3},
+        {"suspicious", 3},
+        {"scam", 3},
+        {"verify", 3},
+        {"click", 2},
+        {"personal information", 3},
+        {"confidential", 2},
+        {"identity", 2},
+        {"social security", 3},
+        {"paypal", 3},
+        {"facebook", 2},
+        {"microsoft", 2},
+        {"ebay", 2},
+        {"amazon", 2},
+        {"apple", 2},
+        {"google", 2},
+        {"irs", 3},
+        {"irs.gov", 3}
+};
+
+// Function to scan a text file for keywords and calculate the total points
+void phishing(const string& filePath) {
+    int totalPoints = 0;
+    map<string, int> keywordCount;
+
+    ifstream inputFile(filePath);
+    if (!inputFile.is_open()) {
+        cerr << "Error opening the file." << endl;
+        return;
+    }
+
+    string l;
+    string txt;
+    while (getline(inputFile, l)) {
+        txt += l + "\n";
+    }
+    inputFile.close();
+
+    for (const auto& [keyword, points] : keywords) {
+        size_t pos = txt.find(keyword);
+        int count = 0;
+        while (pos != string::npos) {
+            count++;
+            pos = txt.find(keyword, pos + 1);
+        }
+        if (count > 0) {
+            keywordCount[keyword] = count;
+            totalPoints += count * points;
+        }
+    }
+
+    // Output results
+    for (const auto& [keyword, count] : keywordCount) {
+        cout << keyword << ": " << count << " occurrences, " << count * keywords[keyword] << " points" << endl;
+    }
+
+    cout << "Total Points: " << totalPoints << endl;
+}
+
+int main() {
+    string filePath = "C:\\untitled5\\malak.txt";  // Replace with the path to your text file,"change the name"
+    phishing(filePath);
+
+}
