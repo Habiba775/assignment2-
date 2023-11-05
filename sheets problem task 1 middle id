@@ -1,3 +1,8 @@
+//File:A2-S21-20220104-Q2.CPP
+//Purpose:solving problem num 2
+//ID:20220104
+//TA:Rana abdelkader
+//Date: 29 oct 2023
 //problem 2
 #include<iostream>
 #include <vector>
@@ -63,6 +68,11 @@ int main() {
 
 
 //=========================
+//File:A2-S21-20220104-Q5.CPP
+//Purpose:solving problem num 5
+//ID:20220104
+//TA:Rana abdelkader
+//Date: 29 oct 2023
 //problem 5
 #include <iostream>
 
@@ -200,6 +210,11 @@ int main()
 
 
 //==========================================================
+//File:A2-S21-20220104-Q8.CPP
+//Purpose:solving problem num 8
+//ID:20220104
+//TA:Rana abdelkader
+//Date: 29 oct 2023
 // problem 8
 #include <iostream>
 #include <string>
@@ -233,6 +248,12 @@ int main() {
     return 0;
 }
 //==================================================
+//File:A2-S21-20220104-Q11.CPP
+//Purpose:solving problem num 11
+//ID:20220104
+//TA:Rana abdelkader
+//Date: 29 oct 2023
+
 //problem 11
 
 #include <iostream>
